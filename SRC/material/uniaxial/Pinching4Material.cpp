@@ -820,6 +820,27 @@ int Pinching4Material::recvSelf(
 
 void Pinching4Material::Print(OPS_Stream &s, int flag)
 {
+	if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+		s << "\t\t\t{";
+		s << "\"name\": \"" << this->getTag() << "\", ";
+		s << "\"type\": \"Pinching4Material\", ";
+		s << "\"stressP\": [" << stress1p << ", " << stress2p << ", " << stress3p << ", " << stress4p << "], ";
+		s << "\"strainP\": [" << strain1p << ", " << strain2p << ", " << strain3p << ", " << strain4p << "], ";
+		s << "\"stressN\": [" << stress1n << ", " << stress2n << ", " << stress3n << ", " << stress4n << "], ";
+		s << "\"strainN\": [" << strain1n << ", " << strain2n << ", " << strain3n << ", " << strain4n << "], ";
+		s << "\"rDispP\": " << rDispP << ", " << "\"rForceP\": " << rForceP << ", " << "\"uForceP\": " << uForceP << ", " ;
+		s << "\"rDispN\": " << rDispN << ", " << "\"rForceN\": " << rForceN << ", " << "\"uForceN\": " << uForceN << ", " ;
+		s << "\"gammaK\": [" << gammaK1 << ", " << gammaK2 << ", " << gammaK3 << ", " << gammaK4 << ", " << gammaKLimit << "], ";
+		s << "\"gammaD\": [" << gammaD1 << ", " << gammaD2 << ", " << gammaD3 << ", " << gammaD4 << ", " << gammaDLimit << "], ";
+		s << "\"gammaF\": [" << gammaF1 << ", " << gammaF2 << ", " << gammaF3 << ", " << gammaF4 << ", " << gammaFLimit << "], ";
+		s << "\"gammaE\": " << gammaE << ", ";
+		if (DmgCyc==0) {
+			s << "\"dmgType\": \"Energy\"}";
+		} else {
+			s << "\"dmgType\": \"Cycle\"}";
+		}
+		return;
+	}
 	// Create a string stream in order to flush at the end everything together (useful for parallel running)
 	std::stringstream ss;
 	ss << "Pinching4Material, tag: " << this->getTag() << endln;
