@@ -445,6 +445,15 @@ SP_Constraint::recvSelf(int cTag, Channel &theChannel,
 void
 SP_Constraint::Print(OPS_Stream &s, int flag) 
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+    	s << "\t\t\t{";
+    	s << "\"tag\": "  << this->getTag() << ", ";
+    	s << "\"node\": " << nodeTag << ", ";
+    	s << "\"dof\": "  <<dofNumber+1<<", ";
+    	s << "\"ref_value\": "  <<valueR<<", ";
+    	s << "\"cur_value\": "  <<valueC<<"}";
+    	return;
+    }
     s << "SP_Constraint: " << this->getTag();
     s << "\t Node: " << nodeTag << " DOF: " << dofNumber+1;
     s << " ref value: " << valueR << " current value: " << valueC << " initial value: " << initialValue << endln;
