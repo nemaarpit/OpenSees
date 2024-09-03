@@ -2366,7 +2366,34 @@ Domain::Print(OPS_Stream &s, int flag)
 	s << "\n\t\t],\n";
     }
 
+    numToPrint = theSPs->getNumComponents();
+    SP_ConstraintIter &theSPss = this->getSPs();
+    SP_Constraint *theSP;
+    numPrinted = 0;
+    s << "\t\t\"sp_constraints\": [\n";
+    while ((theSP = theSPss()) != 0) {
+    	theSP->Print(s, flag);
+    	numPrinted += 1;
+    	if (numPrinted < numToPrint)
+    	  s << ",\n";
+    	else
+    	  s << "\n\t\t],\n";
+    }
 
+    numToPrint = theMPs->getNumComponents();
+    MP_ConstraintIter &theMPss = this->getMPs();
+    MP_Constraint *theMP;
+    numPrinted = 0;
+    s << "\t\t\"mp_constraints\": [\n";
+    while ((theMP = theMPss()) != 0) {
+    	theMP->Print(s, flag);
+    	numPrinted += 1;
+    	if (numPrinted < numToPrint)
+    	  s << ",\n";
+    	else
+    	  s << "\n\t\t],\n";
+    }
+	
     Element *theEle;
     ElementIter &theElementss = this->getElements();
     numToPrint = theElements->getNumComponents();
