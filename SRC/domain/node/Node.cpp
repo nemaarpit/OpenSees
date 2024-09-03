@@ -1723,6 +1723,13 @@ Node::Print(OPS_Stream &s, int flag)
                 s << (*mass)(i, i) << ", ";
             s << (*mass)(numberDOF - 1, numberDOF - 1) << "]";
         }
+        if (theDOF_GroupPtr != 0) {
+            s << ", \"ID\": [";
+            ID nodeID=theDOF_GroupPtr->getID();
+            for (int i=0; i<nodeID.Size()-1; i++)
+		s << nodeID(i)<<", ";
+	    s << nodeID(nodeID.Size()-1)<<"]";
+	}
         s << "}";
     }
 }
