@@ -569,6 +569,35 @@ MP_Constraint::recvSelf(int cTag, Channel &theChannel,
 void
 MP_Constraint::Print(OPS_Stream &s, int flag)
 {     
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+	s << "\t\t\t{";
+	s << "\"tag\": "  << this->getTag() << ", ";
+	s << "\"node_constrained\": " << nodeConstrained << ", ";
+	s << "\"node_retained\": " << nodeRetained;
+	if (constrDOF != 0 && retainDOF != 0) {
+	  s << ", \"dof_constrained\": ["<<(*constrDOF)(0)+1;
+	  for (int i=1; i<(*constrDOF).Size(); i++)
+		s << ", " << (*constrDOF)(i)+1;
+	  s << "], \"dof_retained\": ["<< (*retainDOF)(0)+1;        
+	  for (int i=1; i<(*retainDOF).Size(); i++)
+		s << ", " << (*retainDOF)(i)+1;
+	  s << "]";
+	  if (constraint != 0)
+		s << ", \"constraint_matrix\": [";
+		    for (int i=0; i<constraint->noRows(); i++) {
+				if (i!=0)
+					s<<",";
+				s<<"["<<  (*constraint)(i,0);
+				for (int j=1; j<constraint->noCols(); j++)
+					s <<", "<<  (*constraint)(i,j);
+				s << "]";
+			}
+		s << "]";
+	
+	}
+        s << "}";
+        return;
+    }
     s << "MP_Constraint: " << this->getTag() << "\n";
     s << "\tNode Constrained: " << nodeConstrained;
     s << " node Retained: " << nodeRetained << "\n";
