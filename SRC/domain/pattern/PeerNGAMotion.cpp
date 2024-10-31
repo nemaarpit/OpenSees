@@ -470,6 +470,14 @@ PeerNGAMotion::recvSelf(int commitTag, Channel &theChannel,
 void
 PeerNGAMotion::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"PeerNGAMotion\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor ;
+        s<<"}";
+        return;
+    }
     s << "Path Time Series: constant factor: " << cFactor;
     s << " dT: " << dT << endln;
     if (flag == 1 && thePath != 0) {

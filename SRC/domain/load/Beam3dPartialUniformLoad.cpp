@@ -115,6 +115,14 @@ Beam3dPartialUniformLoad::recvSelf(int commitTag, Channel &theChannel,  FEM_Obje
 void 
 Beam3dPartialUniformLoad::Print(OPS_Stream &s, int flag)
 {
+  if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+      s << "{\"tag\": "<< this->getTag() <<", \"element\": "<< eleTag <<", ";
+      s << "\"wy\": " << wTransy <<", \"wz\": " << wTransz << ", ";
+      s << "\"wx\": " << wAxial << ", ";
+      s << "\"aOverL\": " << aOverL <<", \"bOverL\": " << bOverL;
+      s << "}";
+      return;
+  }
   s << "Beam3dPartialUniformLoad - tag " << this->getTag() << endln;
   s << "  Transverse y: " << wTransy << endln;
   s << "  Transverse z: " << wTransz << endln;

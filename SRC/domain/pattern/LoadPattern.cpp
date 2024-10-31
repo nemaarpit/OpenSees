@@ -923,6 +923,64 @@ LoadPattern::recvSelf(int cTag, Channel &theChannel, FEM_ObjectBroker &theBroker
 void
 LoadPattern::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "\t\t\t{";
+        s << "\"type\": \"Plain\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << scaleFactor << ", ";
+        if (theSeries != 0)	{
+            s << "\"series\": ";
+            theSeries->Print(s,flag);
+            s << ", ";
+        }
+        
+        NodalLoad *nodLoad;
+        NodalLoadIter &theNodalIter = this->getNodalLoads();
+        int numToPrint = theNodalLoads->getNumComponents();
+        int numPrinted = 0;
+        s << "\n\t\t\t \"Node_Loads\": [\n\t\t\t\t";
+        while ((nodLoad = theNodalIter()) != 0) {
+          nodLoad->Print(s,flag);
+          numPrinted += 1;
+          if (numPrinted < numToPrint)
+              s << ",\n\t\t\t\t";
+          else
+              s << "\n\t\t\t\t";
+        }
+        s << "], ";
+        
+        ElementalLoad *eleLoad;
+        ElementalLoadIter &theElementalIter = this->getElementalLoads();
+        numToPrint = theElementalLoads->getNumComponents();
+        numPrinted = 0;
+        s << "\n\t\t\t \"Element_Loads\": [\n\t\t\t\t";
+        while ((eleLoad = theElementalIter()) != 0) {
+          eleLoad->Print(s,flag);
+          numPrinted += 1;
+          if (numPrinted < numToPrint)
+              s << ",\n\t\t\t\t";
+          else
+              s << "\n\t\t\t\t";
+        }
+        s << "], ";
+        
+        SP_Constraint *sp;
+        SP_ConstraintIter &theIter = this->getSPs();
+        numToPrint = theSPs->getNumComponents();
+        numPrinted = 0;
+        s << "\n\t\t\t \"SP_Constraints\": [\n\t\t\t\t";
+        while ((sp = theIter()) != 0) {
+          sp->Print(s,flag);
+          numPrinted += 1;
+          if (numPrinted < numToPrint)
+              s << ",\n\t\t\t\t";
+          else
+              s << "\n\t\t\t\t";
+        }
+        s << "]\n\t\t\t}";
+        return;
+    }
+    
     s << "Load Pattern: " << this->getTag() << "\n";
     s << "  Scale Factor: " << scaleFactor << endln;
     if (theSeries != 0)

@@ -233,6 +233,18 @@ NodalLoad::recvSelf(int cTag, Channel &theChannel,
 void
 NodalLoad::Print(OPS_Stream &s, int flag)
 {
+     if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+         s << "{\"node\": "<<myNode<<", ";
+         s << "\"loads\": [";
+         if (load != 0) {
+             int numLoads = load->Size();
+             s << (*load)(0);
+             for (int i = 1; i < numLoads ; i++)
+                s << ", " << (*load)(i);
+         }
+         s << "]}";
+         return;
+     }
      s << "Nodal Load: " << myNode;
      if (load != 0)
 	 s << " load : " << *load;

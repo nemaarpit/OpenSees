@@ -112,6 +112,12 @@ Beam3dUniformLoad::recvSelf(int commitTag, Channel &theChannel,
 void 
 Beam3dUniformLoad::Print(OPS_Stream &s, int flag)
 {
+  if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+      s << "{\"tag\": "<< this->getTag() <<", \"element\": "<< eleTag <<", ";
+      s << "\"wy\": " << wy <<", \"wz\": " << wz <<", \"wx\": " << wx ;
+      s << "}";
+      return;
+  }
   s << "Beam3dUniformLoad - Reference load: " << this->getTag() << endln;
   s << "  Transverse (y): " << wy << endln;
   s << "  Transverse (z): " << wz << endln;

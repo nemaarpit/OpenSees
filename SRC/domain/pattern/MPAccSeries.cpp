@@ -220,6 +220,19 @@ int MPAccSeries::recvSelf(int commitTag, Channel &theChannel,
 
 void MPAccSeries::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"MPAcc\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"AFactor\": " << AFactor << ", ";
+        s << "\"tStart\": " << tStart << ", ";
+        s << "\"tFinish\": " << tFinish << ", ";
+        s << "\"Period\": " << period << ", ";
+        s << "\"gammaMP\": " << gammaMP << ", ";
+        s << "\"nuMP\": " << nuMP ;
+        s<<"}";
+        return;
+    }
     s << "MPAcc Series" << endln;
     s << "\tAFactor: " << AFactor << endln;
     s << "\ttStart: " << tStart << endln;

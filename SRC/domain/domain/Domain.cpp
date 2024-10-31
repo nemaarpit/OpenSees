@@ -2378,7 +2378,23 @@ Domain::Print(OPS_Stream &s, int flag)
 	s << "\n\t\t]\n";
       }
 
-	s << "\t}\n";
+	s << "\t},\n";
+	
+	LoadPattern *theLoadPattern;
+	LoadPatternIter &theLoadPatternss = this->getLoadPatterns();
+	numToPrint = theLoadPatterns->getNumComponents();
+    numPrinted = 0;
+	s << "\t\"load_patterns\": [\n";
+	while ((theLoadPattern = theLoadPatternss()) != 0) {
+      theLoadPattern->Print(s, flag);
+      numPrinted += 1;
+      if (numPrinted < numToPrint)
+	s << ",\n";
+      else
+	s << "\n";
+      }
+    s<<"\t\t]\n";
+	
 	s << "}\n";
     s << "}\n";
 

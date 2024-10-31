@@ -111,6 +111,13 @@ Beam2dPointLoad::recvSelf(int commitTag, Channel &theChannel,  FEM_ObjectBroker 
 void 
 Beam2dPointLoad::Print(OPS_Stream &s, int flag)
 {
+     if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+         s << "{\"tag\": "<< this->getTag() <<", \"element\": "<< eleTag <<", ";
+         s << "\"Py\": " << Ptrans <<", \"Px\": " << Paxial << ", ";
+         s << "\"x\": " << x ;
+         s << "}";
+         return;
+     }
     s << "Beam3dPointLoad - Reference load" << endln;
     s << "  Transverse: " << Ptrans << endln;
     s << "  Axial:      " << Paxial << endln;

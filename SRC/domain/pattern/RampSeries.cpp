@@ -217,6 +217,18 @@ int RampSeries::recvSelf(int commitTag, Channel& theChannel,
 
 void RampSeries::Print(OPS_Stream& s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"Ramp\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor << ", ";
+        s << "\"tStart\": " << tStart << ", ";
+        s << "\"tRamp\": " << tRamp << ", ";
+        s << "\"offsetFact\": " << offsetFact << ", ";
+        s << "\"smoothFact\": " << smoothFact ;
+        s<<"}";
+        return;
+    }
     s << "Ramp Series" << endln;
     s << "\tFactor: " << cFactor << endln;
     s << "\ttStart: " << tStart << endln;

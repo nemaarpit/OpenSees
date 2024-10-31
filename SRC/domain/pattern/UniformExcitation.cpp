@@ -463,6 +463,27 @@ UniformExcitation::recvSelf(int commitTag, Channel &theChannel,
 void 
 UniformExcitation::Print(OPS_Stream &s, int flag)
 {
+
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "\t\t\t{";
+        s << "\"type\": \"UniformExcitation\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"dir\": "  << theDof << ", ";
+        s << "\"vel0\": "  << vel0 << ", ";
+        s << "\"scaleFactor\": " << fact << ", ";
+        s << "\"series\": ";
+        if (theMotion->getAccelSeries() !=0)
+            //int accelSeriesTag = theMotion->getAccelSeries()->getTag();
+            OPS_getTimeSeries(theMotion->getAccelSeries()->getTag())->Print(s,flag);
+        else
+            s<<"\"NA\"";
+        //s << "\"ref_value\": "  <<valueR<<", ";
+        //s << "\"cur_value\": "  <<valueC;
+        s<<"}";
+        
+        return;
+    }
+    
   s << "UniformExcitation  " << this->getTag() << " - Not Printing the GroundMotion\n";
 }
 

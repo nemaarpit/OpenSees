@@ -230,6 +230,19 @@ int TriangleSeries::recvSelf(int commitTag, Channel &theChannel,
 
 void TriangleSeries::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"Triangle\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor << ", ";
+        s << "\"tStart\": " << tStart << ", ";
+        s << "\"tFinish\": " << tFinish << ", ";
+        s << "\"period\": " << period << ", ";
+        s << "\"phaseShift\": " << phaseShift << ", ";
+        s << "\"zeroShift\": " << zeroShift ;
+        s<<"}";
+        return;
+    }
     s << "Triangle Series" << endln;
     s << "\tFactor: " << cFactor << endln;
     s << "\ttStart: " << tStart << endln;

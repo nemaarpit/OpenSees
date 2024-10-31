@@ -134,6 +134,14 @@ Beam2dPartialUniformLoad::recvSelf(int commitTag, Channel &theChannel,  FEM_Obje
 void 
 Beam2dPartialUniformLoad::Print(OPS_Stream &s, int flag)
 {
+     if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+         s << "{\"tag\": "<< this->getTag() <<", \"element\": "<< eleTag <<", ";
+         s << "\"wya\": " << wTrans_a <<", \"wyb\": " << wTrans_b << ", ";
+         s << "\"wxa\": " << wAxial_a <<", \"wxb\": " << wAxial_b << ", ";
+         s << "\"aOverL\": " << aOverL <<", \"bOverL\": " << bOverL;
+         s << "}";
+         return;
+     }
   s << "Beam2dPartialUniformLoad - tag " << this->getTag() << endln;
   s << "  Transverse: " << wTrans_a << ' ' << wTrans_b << endln;
   s << "  Axial:      " << wAxial_a << ' ' << wAxial_b << endln;

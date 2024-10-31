@@ -179,6 +179,16 @@ RectangularSeries::recvSelf(int commitTag, Channel &theChannel,
 void
 RectangularSeries::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"Rectangular\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor << ", ";
+        s << "\"tStart\": " << tStart << ", ";
+        s << "\"tFinish\": " << tFinish ;
+        s<<"}";
+        return;
+    }
     s << "Linear Series: constant factor: " << cFactor;
     s << "  tStart: " << tStart << "  tFinish: " << tFinish << endln;
 

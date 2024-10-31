@@ -418,6 +418,14 @@ PeerMotion::recvSelf(int commitTag, Channel &theChannel,
 void
 PeerMotion::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"PeerMotion\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor ;
+        s<<"}";
+        return;
+    }
     s << "Path Time Series: constant factor: " << cFactor;
     s << " dT: " << dT << endln;
     if (flag == 1 && thePath != 0) {

@@ -112,6 +112,13 @@ Beam3dPointLoad::recvSelf(int commitTag, Channel &theChannel,  FEM_ObjectBroker 
 void 
 Beam3dPointLoad::Print(OPS_Stream &s, int flag)
 {
+  if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+      s << "{\"tag\": "<< this->getTag() <<", \"element\": "<< eleTag <<", ";
+      s << "\"Py\": " << Py <<", \"Pz\": " << Pz << ", \"Px\": " << Px << ", ";
+      s << "\"x\": " << x ;
+      s << "}";
+      return;
+  }
   s << "Beam3dPointLoad - Reference load" << endln;
   s << "  Transverse (y): " << Py << endln;
   s << "  Transverse (z): " << Pz << endln;

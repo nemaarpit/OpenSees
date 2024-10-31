@@ -221,6 +221,19 @@ int TrigSeries::recvSelf(int commitTag, Channel &theChannel,
 
 void TrigSeries::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"Trig\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor << ", ";
+        s << "\"tStart\": " << tStart << ", ";
+        s << "\"tFinish\": " << tFinish << ", ";
+        s << "\"period\": " << period << ", ";
+        s << "\"phaseShift\": " << phaseShift << ", ";
+        s << "\"zeroShift\": " << zeroShift ;
+        s<<"}";
+        return;
+    }
     s << "Trig Series" << endln;
     s << "\tFactor: " << cFactor << endln;
     s << "\ttStart: " << tStart << endln;

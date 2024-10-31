@@ -148,6 +148,14 @@ ConstantSeries::recvSelf(int commitTag, Channel &theChannel,
 void
 ConstantSeries::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"Constant\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor ;
+        s<<"}";
+        return;
+    }
     s << "Constant Series: factor: " << cFactor << "\n";
 }
 

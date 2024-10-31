@@ -237,6 +237,19 @@ int PulseSeries::recvSelf(int commitTag, Channel &theChannel,
 
 void PulseSeries::Print(OPS_Stream &s, int flag)
 {
+    if (flag == OPS_PRINT_PRINTMODEL_JSON) {
+        s << "{";
+        s << "\"type\": \"Pulse\", ";
+        s << "\"tag\": "  << this->getTag() << ", ";
+        s << "\"scaleFactor\": " << cFactor << ", ";
+        s << "\"tStart\": " << tStart << ", ";
+        s << "\"period\": " << period << ", ";
+        s << "\"pWidth\": " << pWidth << ", ";
+        s << "\"phaseShift\": " << phaseShift << ", ";
+        s << "\"zeroShift\": " << zeroShift ;
+        s<<"}";
+        return;
+    }
     s << "Pulse Series" << endln;
     s << "\tFactor: " << cFactor << endln;
     s << "\ttStart: " << tStart << endln;
