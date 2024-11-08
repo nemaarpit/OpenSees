@@ -1136,12 +1136,17 @@ FiberSection3d::Print(OPS_Stream &s, int flag)
   if (flag == OPS_PRINT_PRINTMODEL_JSON) {
 	  s << "\t\t\t{";
 	  s << "\"name\": \"" << this->getTag() << "\", ";
-	  s << "\"type\": \"FiberSection3d\", ";
+	  s << "\"type\": \"FiberSection3d\", \"computeCentroid\":";
+	  if (computeCentroid)
+	  	s << "true, ";
+	  else
+	  	s << "false, ";
 	  if (theTorsion != 0)
 	    s << "\"torsion\": " << theTorsion->getInitialTangent() << ", ";
 	  s << "\"fibers\": [\n";
 	  for (int i = 0; i < numFibers; i++) {
 		  s << "\t\t\t\t{\"coord\": [" << matData[3*i] << ", " << matData[3*i+1] << "], ";
+		  s << "\"number\": " << i << ", ";
 		  s << "\"area\": " << matData[3*i+2] << ", ";
 		  s << "\"material\": \"" << theMaterials[i]->getTag() << "\"";
 		  if (i < numFibers - 1)
